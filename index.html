@@ -1,83 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weekly Planner - Personal Organization Tool</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <h1>Weekly Planner</h1>
-            <p class="subtitle">Organize Your Week, Boost Your Productivity</p>
-        </header>
+      <header>
+        <h1>Weekly Planner</h1>
+        <p class="subtitle">Organize Your Week, Boost Your Productivity</p>
+      </header>
 
-        <main>
-            <!-- Weekly Days Section -->
-            <section class="weekly-section">
-                <h2>My Week</h2>
-                <div class="days-container">
-                    <div class="day-card" data-day="sunday">
-                        <h3>Sunday</h3>
-                        <div class="tasks-list">
-                            <!-- Tasks will be added here -->
-                        </div>
-                        <button class="add-task-btn">+ Add Task</button>
-                    </div>
+      <main>
+        <!-- Weekly Days Section -->
+        <section class="weekly-section">
+          <h2>My Week</h2>
+          <div class="days-container">
+            <div class="day-card" data-day="sunday">
+              <h3>Sunday</h3>
+              <div class="tasks-list">
+                <!-- Tasks will be added here -->
+              </div>
+              <button class="add-task-btn">+ Add Task</button>
+            </div>
 
-                    <div class="day-card" data-day="monday">
-                        <h3>Monday</h3>
-                        <div class="tasks-list">
-                            <!-- Tasks will be added here -->
-                        </div>
-                        <button class="add-task-btn">+ Add Task</button>
-                    </div>
+            <div class="day-card" data-day="monday">
+              <h3>Monday</h3>
+              <div class="tasks-list">
+                <!-- Tasks will be added here -->
+              </div>
+              <button class="add-task-btn">+ Add Task</button>
+            </div>
 
-                    <div class="day-card" data-day="tuesday">
-                        <h3>Tuesday</h3>
-                        <div class="tasks-list">
-                            <!-- Tasks will be added here -->
-                        </div>
-                        <button class="add-task-btn">+ Add Task</button>
-                    </div>
+            <div class="day-card" data-day="tuesday">
+              <h3>Tuesday</h3>
+              <div class="tasks-list">
+                <!-- Tasks will be added here -->
+              </div>
+              <button class="add-task-btn">+ Add Task</button>
+            </div>
 
-                    <div class="day-card" data-day="wednesday">
-                        <h3>Wednesday</h3>
-                        <div class="tasks-list">
-                            <!-- Tasks will be added here -->
-                        </div>
-                        <button class="add-task-btn">+ Add Task</button>
-                    </div>
+            <div class="day-card" data-day="wednesday">
+              <h3>Wednesday</h3>
+              <div class="tasks-list">
+                <!-- Tasks will be added here -->
+              </div>
+              <button class="add-task-btn">+ Add Task</button>
+            </div>
 
-                    <div class="day-card" data-day="thursday">
-                        <h3>Thursday</h3>
-                        <div class="tasks-list">
-                            <!-- Tasks will be added here -->
-                        </div>
-                        <button class="add-task-btn">+ Add Task</button>
-                    </div>
+            <div class="day-card" data-day="thursday">
+              <h3>Thursday</h3>
+              <div class="tasks-list">
+                <!-- Tasks will be added here -->
+              </div>
+              <button class="add-task-btn">+ Add Task</button>
+            </div>
 
-                    <div class="day-card" data-day="friday">
-                        <h3>Friday</h3>
-                        <div class="tasks-list">
-                            <!-- Tasks will be added here -->
-                        </div>
-                        <button class="add-task-btn">+ Add Task</button>
-                    </div>
+            <div class="day-card" data-day="friday">
+              <h3>Friday</h3>
+              <div class="tasks-list">
+                <!-- Tasks will be added here -->
+              </div>
+              <button class="add-task-btn">+ Add Task</button>
+            </div>
 
-                    <div class="day-card" data-day="saturday">
-                        <h3>Saturday</h3>
-                        <div class="tasks-list">
-                            <!-- Tasks will be added here -->
-                        </div>
-                        <button class="add-task-btn">+ Add Task</button>
-                    </div>
-                </div>
-            </section>
-        </main>
+            <div class="day-card" data-day="saturday">
+              <h3>Saturday</h3>
+              <div class="tasks-list">
+                <!-- Tasks will be added here -->
+              </div>
+              <button class="add-task-btn">+ Add Task</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Task Input Modal -->
+    <div class="modal-overlay" id="taskModal">
+      <div class="modal-content">
+        <h3 id="modalTitle">Add Task</h3>
+        <input
+          type="text"
+          id="taskInput"
+          placeholder="Enter your task..."
+          autocomplete="off"
+        />
+        <div class="modal-buttons">
+          <button class="btn-cancel" id="cancelBtn">Cancel</button>
+          <button class="btn-add" id="addBtn">Add Task</button>
+        </div>
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
