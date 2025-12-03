@@ -5,14 +5,19 @@ console.log('Weekly Planner loaded successfully!');
 
 // Data structure to store tasks for each day
 let weeklyTasks = {
-    sunday: [],
+    weekend: [],
     monday: [],
     tuesday: [],
     wednesday: [],
     thursday: [],
-    friday: [],
-    saturday: []
+    friday: []
 };
+
+// Data structure for habits
+let habits = [];
+
+// Days of the week for habit tracker
+const weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
 // Get all add task buttons
 const addTaskButtons = document.querySelectorAll('.add-task-btn');
@@ -37,7 +42,9 @@ addTaskButtons.forEach(button => {
         
         // Clear input and show modal
         taskInput.value = '';
+        taskInput.placeholder = 'Enter your task...';
         modal.classList.add('active');
+        modal.dataset.mode = 'task';
         taskInput.focus();
     });
 });
@@ -45,6 +52,7 @@ addTaskButtons.forEach(button => {
 // Cancel button - close modal
 cancelBtn.addEventListener('click', function() {
     modal.classList.remove('active');
+    modal.dataset.mode = '';
     currentDay = null;
 });
 
@@ -71,6 +79,7 @@ taskInput.addEventListener('keypress', function(e) {
 modal.addEventListener('click', function(e) {
     if (e.target === modal) {
         modal.classList.remove('active');
+        modal.dataset.mode = '';
         currentDay = null;
     }
 });
@@ -178,5 +187,142 @@ function capitalizeFirstLetter(string) {
 Object.keys(weeklyTasks).forEach(day => {
     renderTasks(day);
 });
+
+// ==================================
+// HABIT TRACKER FUNCTIONALITY
+// ==================================
+
+const addHabitBtn = document.getElementById('addHabitBtn');
+const habitsList = document.getElementById('habitsList');
+
+// Add Habit Button Click
+addHabitBtn.addEventListener('click', function() {
+    modalTitle.textContent = 'Add New Habit';
+    taskInput.placeholder = 'Enter habit name (e.g., Drink Water, Exercise)';
+    taskInput.value = '';
+    modal.classList.add('active');
+    taskInput.focus();
+    
+    // Change modal behavior to add habit instead of task
+    modal.dataset.mode = 'habit';
+});
+
+// Update the Add Button click handler to support both tasks and habits
+addBtn.addEventListener('click', function() {
+    const inputText = taskInput.value.trim();
+    
+    if (inputText === '') return;
+    
+    // Check if we're adding a habit or a task
+    if (modal.dataset.mode === 'habit') {
+        addHabit(inputText);
+        renderHabits();
+    } else if (currentDay) {
+        addTask(currentDay, inputText);
+        renderTasks(currentDay);
+        currentDay = null;
+    }
+    
+    modal.classList.remove('active');
+    modal.dataset.mode = '';
+});
+
+// Function to add a habit
+function addHabit(habitName) {
+    const habit = {
+        id: Date.now(),
+        name: habitName,
+        days: [false, false, false, false, false, false, false] // 7 days, all unchecked
+    };
+    
+    habits.push(habit);
+    console.log('Habit added:', habit);
+}
+
+// Function to render all habits
+function renderHabits() {
+    if (habits.length === 0) {
+        habitsList.innerHTML = '<p class="no-habits">No habits yet. Start tracking your progress!</p>';
+        return;
+    }
+    
+    habitsList.innerHTML = '';
+    
+    habits.forEach(habit => {
+        const habitRow = document.createElement('div');
+        habitRow.className = 'habit-row';
+        
+        let daysHTML = '';
+        habit.days.forEach((checked, index) => {
+            daysHTML += `
+                <div class="habit-day-checkbox ${checked ? 'checked' : ''}" 
+                     data-habit-id="${habit.id}" 
+                     data-day-index="${index}">
+                </div>
+            `;
+        });
+        
+        habitRow.innerHTML = `
+            <span class="habit-name">${habit.name}</span>
+            <div class="habit-days">
+                ${daysHTML}
+            </div>
+            <button class="delete-habit-btn" data-habit-id="${habit.id}">×</button>
+        `;
+        
+        habitsList.appendChild(habitRow);
+    });
+    
+    // Add event listeners to checkboxes
+    addHabitCheckboxListeners();
+    // Add event listeners to delete buttons
+    addHabitDeleteListeners();
+}
+
+// Function to add checkbox listeners for habits
+function addHabitCheckboxListeners() {
+    const checkboxes = document.querySelectorAll('.habit-day-checkbox');
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('click', function() {
+            const habitId = parseInt(this.getAttribute('data-habit-id'));
+            const dayIndex = parseInt(this.getAttribute('data-day-index'));
+            
+            toggleHabitDay(habitId, dayIndex);
+            renderHabits();
+        });
+    });
+}
+
+// Function to toggle a habit day
+function toggleHabitDay(habitId, dayIndex) {
+    const habit = habits.find(h => h.id === habitId);
+    if (habit) {
+        habit.days[dayIndex] = !habit.days[dayIndex];
+        console.log(`Habit ${habitId} day ${dayIndex} toggled:`, habit.days[dayIndex]);
+    }
+}
+
+// Function to add delete listeners for habits
+function addHabitDeleteListeners() {
+    const deleteButtons = document.querySelectorAll('.delete-habit-btn');
+    
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const habitId = parseInt(this.getAttribute('data-habit-id'));
+            deleteHabit(habitId);
+            renderHabits();
+        });
+    });
+}
+
+// Function to delete a habit
+function deleteHabit(habitId) {
+    habits = habits.filter(habit => habit.id !== habitId);
+    console.log(`Habit ${habitId} deleted`);
+}
+
+// Initialize habits
+renderHabits();
 
 console.log('Task management system initialized!');

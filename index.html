@@ -18,14 +18,6 @@
         <section class="weekly-section">
           <h2>My Week</h2>
           <div class="days-container">
-            <div class="day-card" data-day="sunday">
-              <h3>Sunday</h3>
-              <div class="tasks-list">
-                <!-- Tasks will be added here -->
-              </div>
-              <button class="add-task-btn">+ Add Task</button>
-            </div>
-
             <div class="day-card" data-day="monday">
               <h3>Monday</h3>
               <div class="tasks-list">
@@ -66,12 +58,28 @@
               <button class="add-task-btn">+ Add Task</button>
             </div>
 
-            <div class="day-card" data-day="saturday">
-              <h3>Saturday</h3>
+            <div class="day-card" data-day="weekend">
+              <h3>Weekend</h3>
+              <p class="weekend-subtitle">Saturday & Sunday</p>
               <div class="tasks-list">
                 <!-- Tasks will be added here -->
               </div>
               <button class="add-task-btn">+ Add Task</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Habit Tracker Section -->
+        <section class="habit-tracker-section">
+          <h2>Habit Tracker</h2>
+          <div class="habit-tracker-container">
+            <div class="habits-list-area">
+              <div id="habitsList">
+                <!-- Habits will be added here dynamically -->
+              </div>
+              <button class="add-habit-btn" id="addHabitBtn">
+                + Add Habit
+              </button>
             </div>
           </div>
         </section>
