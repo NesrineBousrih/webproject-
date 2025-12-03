@@ -16,6 +16,9 @@ let weeklyTasks = {
 // Data structure for habits
 let habits = [];
 
+// Data structure for weekly goals
+let weeklyGoals = [];
+
 // Days of the week for habit tracker
 const weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
@@ -189,6 +192,112 @@ Object.keys(weeklyTasks).forEach(day => {
 });
 
 // ==================================
+// WEEKLY GOALS FUNCTIONALITY
+// ==================================
+
+const addGoalBtn = document.getElementById('addGoalBtn');
+const goalsList = document.getElementById('goalsList');
+
+// Add Goal Button Click
+addGoalBtn.addEventListener('click', function() {
+    modalTitle.textContent = 'Add Weekly Goal';
+    taskInput.placeholder = 'Enter your goal for this week...';
+    taskInput.value = '';
+    modal.classList.add('active');
+    taskInput.focus();
+    
+    // Change modal behavior to add goal
+    modal.dataset.mode = 'goal';
+});
+
+// Function to add a goal
+function addGoal(goalText) {
+    const goal = {
+        id: Date.now(),
+        text: goalText,
+        completed: false
+    };
+    
+    weeklyGoals.push(goal);
+    console.log('Goal added:', goal);
+}
+
+// Function to render all goals
+function renderGoals() {
+    if (weeklyGoals.length === 0) {
+        goalsList.innerHTML = '<p class="no-goals">No goals yet. Set your weekly goals!</p>';
+        return;
+    }
+    
+    goalsList.innerHTML = '';
+    
+    weeklyGoals.forEach(goal => {
+        const goalItem = document.createElement('div');
+        goalItem.className = 'goal-item';
+        if (goal.completed) {
+            goalItem.classList.add('completed');
+        }
+        
+        goalItem.innerHTML = `
+            <input type="checkbox" class="goal-checkbox" ${goal.completed ? 'checked' : ''} data-id="${goal.id}">
+            <span class="goal-text">${goal.text}</span>
+            <button class="delete-goal-btn" data-id="${goal.id}">×</button>
+        `;
+        
+        goalsList.appendChild(goalItem);
+    });
+    
+    // Add event listeners to checkboxes
+    addGoalCheckboxListeners();
+    // Add event listeners to delete buttons
+    addGoalDeleteListeners();
+}
+
+// Function to add checkbox listeners for goals
+function addGoalCheckboxListeners() {
+    const checkboxes = document.querySelectorAll('.goal-checkbox');
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const goalId = parseInt(this.getAttribute('data-id'));
+            toggleGoalCompletion(goalId);
+            renderGoals();
+        });
+    });
+}
+
+// Function to toggle goal completion
+function toggleGoalCompletion(goalId) {
+    const goal = weeklyGoals.find(g => g.id === goalId);
+    if (goal) {
+        goal.completed = !goal.completed;
+        console.log(`Goal ${goalId} completion toggled:`, goal.completed);
+    }
+}
+
+// Function to add delete listeners for goals
+function addGoalDeleteListeners() {
+    const deleteButtons = document.querySelectorAll('.delete-goal-btn');
+    
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const goalId = parseInt(this.getAttribute('data-id'));
+            deleteGoal(goalId);
+            renderGoals();
+        });
+    });
+}
+
+// Function to delete a goal
+function deleteGoal(goalId) {
+    weeklyGoals = weeklyGoals.filter(goal => goal.id !== goalId);
+    console.log(`Goal ${goalId} deleted`);
+}
+
+// Initialize goals
+renderGoals();
+
+// ==================================
 // HABIT TRACKER FUNCTIONALITY
 // ==================================
 
@@ -207,16 +316,19 @@ addHabitBtn.addEventListener('click', function() {
     modal.dataset.mode = 'habit';
 });
 
-// Update the Add Button click handler to support both tasks and habits
+// Update the Add Button click handler to support tasks, goals, and habits
 addBtn.addEventListener('click', function() {
     const inputText = taskInput.value.trim();
     
     if (inputText === '') return;
     
-    // Check if we're adding a habit or a task
+    // Check mode: habit, goal, or task
     if (modal.dataset.mode === 'habit') {
         addHabit(inputText);
         renderHabits();
+    } else if (modal.dataset.mode === 'goal') {
+        addGoal(inputText);
+        renderGoals();
     } else if (currentDay) {
         addTask(currentDay, inputText);
         renderTasks(currentDay);

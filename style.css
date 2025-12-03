@@ -7,7 +7,7 @@
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: white;
   min-height: 100vh;
   color: #333;
   line-height: 1.6;
@@ -82,11 +82,10 @@ header h1 {
 }
 
 .weekly-section h2 {
-  color: white;
+  color: #2c3e50;
   font-size: 2rem;
   margin-bottom: 25px;
   text-align: center;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   font-weight: 600;
 }
 
@@ -163,13 +162,150 @@ header h1 {
   background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
 }
 
-/* Habit Tracker Section */
-.habit-tracker-section {
+/* Bottom Sections Container - Goals & Habits */
+.bottom-sections {
+  display: flex;
+  gap: 25px;
   margin-top: 50px;
+  flex-wrap: wrap;
+}
+
+/* Weekly Goals Section */
+.weekly-goals-section {
+  flex: 1;
+  min-width: 300px;
   padding: 30px;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.weekly-goals-section h2 {
+  color: #2c3e50;
+  font-size: 2rem;
+  margin-bottom: 25px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.goals-container {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#goalsList {
+  margin-bottom: 20px;
+  min-height: 200px;
+  flex-grow: 1;
+}
+
+/* Goal Item */
+.goal-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.goal-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.goal-item.completed {
+  background: linear-gradient(135deg, #d4f1d4 0%, #c8e6c9 100%);
+  opacity: 0.8;
+}
+
+.goal-checkbox {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  accent-color: #667eea;
+}
+
+.goal-text {
+  flex-grow: 1;
+  font-size: 1.05rem;
+  color: #2c3e50;
+  font-weight: 500;
+  word-wrap: break-word;
+}
+
+.goal-item.completed .goal-text {
+  text-decoration: line-through;
+  color: #95a5a6;
+}
+
+.delete-goal-btn {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  line-height: 1;
+  transition: all 0.3s;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.delete-goal-btn:hover {
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 4px 10px rgba(245, 87, 108, 0.4);
+}
+
+/* Add Goal Button */
+.add-goal-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  color: #2c3e50;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: 600;
+  transition: all 0.3s;
+  box-shadow: 0 4px 10px rgba(168, 237, 234, 0.3);
+  margin-top: auto;
+}
+
+.add-goal-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(168, 237, 234, 0.5);
+}
+
+.no-goals {
+  text-align: center;
+  color: #95a5a6;
+  font-style: italic;
+  padding: 40px;
+  font-size: 1.1rem;
+}
+
+/* Habit Tracker Section */
+.habit-tracker-section {
+  flex: 1;
+  min-width: 300px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
 }
 
 .habit-tracker-section h2 {
@@ -182,14 +318,21 @@ header h1 {
 
 .habit-tracker-container {
   width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .habits-list-area {
   width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 #habitsList {
   margin-bottom: 20px;
+  flex-grow: 1;
 }
 
 /* Individual Habit Row */
@@ -286,6 +429,7 @@ header h1 {
   font-weight: 600;
   transition: all 0.3s;
   box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+  margin-top: auto;
 }
 
 .add-habit-btn:hover {
